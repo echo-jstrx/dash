@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.widget {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto; /* Adjust height for text widgets */
+    max-height: 50vh;
+}
+
+.widget h3 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.widget canvas {
+    padding-bottom: 20%;
+    width: 100% !important;
+    height: 100% !important;
+}
+  </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Primary Metrics with Graphs -->
+        <div class="widget" id="total-sales">
+            <h3>Total Sales</h3>
+            <canvas id="totalSalesChart"></canvas>
+        </div>
+        <div class="widget" id="sales-by-vendor">
+            <h3>Sales by Vendor</h3>
+            <canvas id="salesByVendorChart"></canvas>
+        </div>
+        <div class="widget" id="order-status">
+            <h3>Order Status</h3>
+            <canvas id="orderStatusChart"></canvas>
+        </div>
+
+        <!-- Secondary Metrics with Text -->
+        <div class="widget" id="average-order-value">
+            <h3>Average Order Value</h3>
+            <p>$45.67</p>
+        </div>
+        <div class="widget" id="total-orders">
+            <h3>Total Orders</h3>
+            <p>1,234</p>
+        </div>
+        <div class="widget" id="fulfillment-rates">
+            <h3>Fulfillment Rates</h3>
+            <p>95%</p>
+        </div>
+        <!-- <div class="widget" id="top-selling-products">
+            <h3>Popular Items</h3>
+            <ul>
+                <li>Product A</li>
+                <li>Product B</li>
+                <li>Product C</li>
+            </ul>
+        </div> -->
+        <div class="widget" id="conversion-rates">
+            <h3>Conversion Rates</h3>
+            <p>2.5%</p>
+        </div>
+        <div class="widget" id="vendor-ratings">
+            <h3>Rating</h3>
+            <p>4.5 (500)</p>
+        </div>
+        <div class="widget" id="commission-earned">
+            <h3>Income</h3>
+            <p>$12,345</p>
+        </div>
+        <!-- <div class="widget" id="inventory-levels">
+            <h3>Active Products</h3>
+            <p>2 of 25</p>
+        </div> -->
+        <!-- <div class="widget" id="customer-demographics">
+            <h3>Customer Demographics</h3>
+            <p>Age: 25-34, Location: USA</p>
+        </div> -->
+        <div class="widget" id="customer-retention-rate">
+            <h3>Customer Retention Rate</h3>
+            <p>75% (3 months)</p>
+        </div>
+        <!-- <div class="widget" id="revenue-vs-expenses">
+            <h3>Revenue vs. Expenses</h3>
+            <p>Revenue: $100,000, Expenses: $80,000</p>
+        </div> -->
+        <div class="widget" id="refunds-and-returns">
+            <h3>Refunds and Returns</h3>
+            <p>$5,000</p>
+        </div>
+        <!-- <div class="widget" id="profit-margins">
+            <h3>Profit Margins</h3>
+            <p>20%</p>
+        </div> -->
+        <div class="widget" id="shipping-times">
+            <h3>Shipping Times</h3>
+            <p>3-5 days</p>
+        </div>
+        <br><br>
+        <div>Admin panel only:</div>
+        <div class="widget" id="customer-acquisition-cost">
+            <h3>Customer Acquisition Cost</h3>
+            <p>$10.50</p>
+        </div>
+        <div class="widget" id="traffic-sources">
+            <h3>Traffic Sources</h3>
+            <p>Organic: 50%, Social: 30%, Paid: 20%</p>
+        </div>
+        <div class="widget" id="promotional-campaign-performance">
+            <h3>Promotional Campaign Performance</h3>
+            <p>Campaign A: 10%, Campaign B: 15%</p>
+        </div>
+        <div class="widget" id="customer-support-tickets">
+            <h3>Customer Support Tickets</h3>
+            <p>Open: 10, Closed: 90</p>
+        </div>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+    // Example data for charts
+    const exampleData = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+        datasets: [{
+            label: 'Example Data',
+            data: [12000, 15000, 18000, 20000, 22000, 25000],
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        }]
+    };
+
+    const exampleOptions = {
+        responsive: true,
+        maintainAspectRatio: false
+    };
+
+    // Initialize primary charts
+    const charts = [
+        { id: 'totalSalesChart', type: 'line', data: exampleData, options: exampleOptions },
+        { id: 'salesByVendorChart', type: 'bar', data: exampleData, options: exampleOptions },
+        { id: 'orderStatusChart', type: 'doughnut', data: exampleData, options: exampleOptions }
+    ];
+
+    charts.forEach(chart => {
+        const ctx = document.getElementById(chart.id).getContext('2d');
+        new Chart(ctx, {
+            type: chart.type,
+            data: chart.data,
+            options: chart.options
+        });
+    });
+});
+
+    </script>
+</body>
+</html>
